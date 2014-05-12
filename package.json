@@ -1,0 +1,29 @@
+{
+  "name": "lineCutter",
+  "version": "0.1.0",
+  "description": "a simple file cutting tool",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:zcfrank1st/lineCutter.git"
+  },
+  "keywords": [
+    "file",
+    "split"
+  ],
+  "author": "zcfrank1st",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zcfrank1st/lineCutter/issues"
+  },
+  "homepage": "https://github.com/zcfrank1st/lineCutter",
+  "dependencies": {
+    "colors": "^0.6.2"
+  }
+}
