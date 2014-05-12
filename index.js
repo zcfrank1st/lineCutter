@@ -14,19 +14,22 @@ function lineCutter(fileName, lineNum) {
     thredhold = lineNum || options.lineNum,
     sliceNum = 0;
 
+  function genFile(sliceNum, count, line) {
+    fs.writeFile(sliceNum + '_split.txt', line + '\n', {
+      flag: 'a'
+    }, function (err) {
+      if (err) throw err;
+      count = count + 1;
+    });
+  }
+
   line.eachLine(fileName, function (line, last) {
     if (count > thredhold) {
       sliceNum = sliceNum + 1;
       count = 1;
-      fs.writeFile(sliceNum + '_split.txt', line + '\n', {flag: 'a'},function (err) {
-        if (err) throw err;
-        count = count + 1;
-      });
+      genFile(sliceNum, count, line);
     } else {
-      fs.writeFile(sliceNum + '_split.txt', line + '\n', {flag: 'a'}, function (err) {
-        if (err) throw err;
-        count = count + 1;
-      });
+      genFile(sliceNum, count, line);
     }
     if (!last) {
       count = count + 1;
@@ -36,4 +39,4 @@ function lineCutter(fileName, lineNum) {
   });
 }
 
-lineCutter('./test/1.txt', 10);
+module.exports = lineCutter;
