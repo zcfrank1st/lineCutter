@@ -2,13 +2,14 @@ var
   fs = require('fs'),
   _ = require('underscore'),
   line = require('line-reader'),
-  xlsx = require('node-xlsx');
+  xlsx = require('node-xlsx'),
+  colors = require('colors');
 
 var options = {
   lineNum: 1000000
 };
 
-function genFile(sliceNum, line) {
+function genFile (sliceNum, line) {
   fs.writeFile(sliceNum + '_cutter_split.txt', line + '\n', {
     flag: 'a'
   }, function (err) {
@@ -16,6 +17,30 @@ function genFile(sliceNum, line) {
   });
 }
 
+function tip (sliceNum) {
+  console.log(('Starting Generating file ' + sliceNum + '_cutter_split.txt') .underline.blue);
+}
+
+function icon () {
+  var cutter_icon = '\n\
++======================================================+ \n\
+||             ,%%%%%%%%,                             || \n\
+||           ,%%/\\%%%%/\\%%                            || \n\
+||          ,%%%\\c "" J\/%%%                           || \n\
+|| %.       %%%%/ o  o \\%%%%                          || \n\
+|| `%%.     %%%%    _  |%%%%                          || \n\
+||  `%%     `%%%%(__Y__)%%%                           || \n\
+||  //       ;%%%%`\\-/%%%%                            || \n\
+|| ((       /  `%%%%%%%%                              || \n\
+||  \\\\    .`        | |                               || \n\
+||   \\\\  /       \\  | |          v0.2                 || \n\
+||    \\\\/         ) | |                               || \n\
+||     \\         /_ | |__                             || \n\
+||     (___________)))))))       @author zcfrank1st   || \n\
++======================================================+ \n\
+';
+  console.log(cutter_icon .rainbow);
+}
 
 var cutter = module.exports;
 
@@ -31,18 +56,21 @@ cutter.simpleCutter =
       thredhold = lineNum || options.lineNum,
       sliceNum = 0;
 
+    tip (sliceNum);
     line.eachLine(fileName, function (line, last) {
       if (count > thredhold) {
         sliceNum = sliceNum + 1;
         count = 1;
-        genFile(sliceNum, line);
+        tip (sliceNum);
+        genFile (sliceNum, line);
       } else {
         genFile(sliceNum, line);
       }
       if (!last) {
         count = count + 1;
       } else {
-        console.log('SimpleCutter finish cutting!');
+        icon();
+        console.log(('SimpleCutter finish cutting file ' + fileName) .green);
       }
     });
 };
@@ -76,10 +104,12 @@ cutter.xlsxCutter =
     );
 
     var tag = 1;
+    tip (sliceNum);
     for (var i = 0; i < lineArr.length; i++) {
       if (tag > thredhold) {
         sliceNum = sliceNum + 1;
         tag = 1;
+        tip (sliceNum);
         genFile(sliceNum, lineArr[lineCount - 1]);
       } else {
         genFile(sliceNum, lineArr[lineCount - 1]);
@@ -87,4 +117,6 @@ cutter.xlsxCutter =
       lineCount = lineCount + 1;
       tag = tag + 1;
     }
+    icon();
+    console.log(('XlsxCutter finish cutting file ' + fileName) .green);
 };
