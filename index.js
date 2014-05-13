@@ -80,6 +80,8 @@ cutter.simpleCutter =
  * @param fileName
  * @param lineNum
  **/
+
+// FIXME xlsx文件解析有问题,可能需要自己实现
 cutter.xlsxCutter =
   function xlsxCutter(fileName, lineNum) {
     var obj = xlsx.parse(fileName);
