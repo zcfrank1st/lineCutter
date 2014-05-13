@@ -12,10 +12,11 @@ First:
 Then:
 	
 	var cutter = require('line-cutter');
-	// split file 1.txt per 10 lines and generate new files
-	cutter('./text/1.txt', 10); 
+	// split text file per 10 lines and generate new files
+	cutter.simpleCutter('./text/1.txt', 10); 
+	// split xlsx file
+	cutter.xlsxCutter('./demo.xlsx', 10);
 	
-P.S. now working in pure text
 
 ## Licence
 
